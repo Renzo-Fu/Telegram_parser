@@ -1,0 +1,12 @@
+# Ignore environment variables file
+.env
+
+# Ignore pytest cache
+.pytest_cache/
+
+# Ignore Python cache files
+*.pyc
+__pycache__/
+
+# Ignore Telethon session files
+*.session
