@@ -10,7 +10,7 @@ api_id = os.getenv("TELEGRAM_API_ID")
 api_hash = os.getenv("TELEGRAM_API_HASH")
 
 
-def get_telegram_messages(channel_name, limit):
+def get_telegram_messages(channel_name, limit, last_scraped_id=None):
     """
     Fetches messages from a given Telegram channel.
 
@@ -23,5 +23,12 @@ def get_telegram_messages(channel_name, limit):
     """
     with TelegramClient("my_account", api_id, api_hash) as client:
         channel = client.get_entity(channel_name)
-        history = list(client.iter_messages(channel, limit=limit))
+
+        # Fetch messages newer than the last_scraped_id if provided
+        if last_scraped_id:
+            history = list(client.iter_messages(
+                channel, limit=limit, min_id=last_scraped_id))
+        else:
+            history = list(client.iter_messages(channel, limit=limit))
+
         return history

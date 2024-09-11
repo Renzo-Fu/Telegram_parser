@@ -1,5 +1,6 @@
 import json
 import time
+import os
 
 
 def serialize_entities(entities):
@@ -60,3 +61,27 @@ def measure_time(func):
         print(f"{func.__name__} took {end_time - start_time:.2f} seconds")
         return result
     return wrapper
+
+
+def load_last_scraped_ids():
+    """
+    Loads the last scraped message IDs for each channel from a JSON file.
+
+    Returns:
+        dict: A dictionary mapping channel names to their last scraped message ID.
+    """
+    if os.path.exists('data/last_scraped_ids.json'):
+        with open('data/last_scraped_ids.json', 'r') as file:
+            return json.load(file)
+    return {}
+
+
+def save_last_scraped_ids(last_scraped_ids):
+    """
+    Saves the last scraped message IDs for each channel to a JSON file.
+
+    Args:
+        last_scraped_ids (dict): A dictionary mapping channel names to their last scraped message ID.
+    """
+    with open('data/last_scraped_ids.json', 'w') as file:
+        json.dump(last_scraped_ids, file)

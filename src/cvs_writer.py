@@ -4,7 +4,7 @@ import os
 from pathlib import Path
 
 
-def write_csv(csv_file, messages):
+def write_csv(csv_file, messages, channel_name):
     """
     Writes a list of Telegram messages to a CSV file.
 
@@ -22,7 +22,7 @@ def write_csv(csv_file, messages):
     headers = ["CPC Дерево", "Ключевые слова", "Краткое описание идеи/продукта",
                "Длинное описание идеи/продукта", "Компания", "Личности (если есть)",
                "Какой потенциал проекта? Для чего он может быть применим? в чем польза?",
-               "Тип источника", "Ссылки", "Дата поста", "Текст сообщения", "Ссылка на сообщение"]
+               "Тип источника", "Название источника", "Источник", "Дата поста", "Текст сообщения"]
 
     with open(csv_file, mode='w', newline='', encoding='utf-8') as file:
         writer = csv.writer(file)
@@ -45,8 +45,10 @@ def write_csv(csv_file, messages):
                 "",  # Placeholder for Какой потенциал проекта
                 "TG",  # Тип источника
                 ', '.join(urls),  # Links found in message entities
+                channel_name,
+                message_link,  # Message link
                 # Date without timezone info
                 message.date.replace(tzinfo=None),
-                message_content,  # Message text/caption
-                message_link  # Message link
+                message_content  # Message text/caption
+
             ])
