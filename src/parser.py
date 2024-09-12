@@ -7,6 +7,9 @@ import os
 # Load environment variables from .env file
 load_dotenv()
 
+# Directly set environment variables (for testing purposes) if updating .env file doesn't work
+# os.environ["TELEGRAM_CHANNELS"] = "channel_1,cahnnel_2,cahnnel_3"
+
 
 @measure_time
 def main():
@@ -14,14 +17,14 @@ def main():
     Main function to scrape messages from multiple Telegram channels.
     Scrapes only new messages since the last scrape for each channel.
     """
-    channels = os.getenv("TELEGRAM_CHANNEL")
-    limit = 1500
+    channels = os.getenv("TELEGRAM_CHANNELS").split(',')
+    limit = 50  # can be set as dyanmic if needed, for now is set here for testing purposes
     csv_file = "data/collected_data.csv"
 
     # Load last scraped message IDs for all channels
     last_scraped_ids = load_last_scraped_ids()
 
-    for channel in channels:
+    for channel in list(channels):
         print(f"Scraping messages for {channel.strip()}...")
 
         # Fetch new messages from the channel
