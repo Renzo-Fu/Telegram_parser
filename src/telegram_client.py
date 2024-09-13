@@ -83,6 +83,9 @@ def save_media(client: TelegramClient, media, folder: str, message_id: int):
                 attr, types.DocumentAttributeFilename)),
             f'{message_id}.jpg'
         )
+    elif isinstance(media, types.MessageMediaVideo):
+        print('is determining videos')
+        file_name = f'{message_id}.mp4'
     else:
         file_name = f'{message_id}.jpg'
 
