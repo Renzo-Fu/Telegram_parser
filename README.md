@@ -1,7 +1,10 @@
 # Telegram Parser
 
 This is a test parser for extracting Telegram messages and saving them to a CSV file using the library Telethon.
-
+## Update
+- The `save_media` function now identifies and processes different media types, for now just works with photos and pdfs:
+     - **Photos**: Files are saved with a `.jpg` extension.
+     - **Documents**: Files are saved with the extension specified in the document’s attributes. If the file name is not available, it defaults to `.jpg`.
 ## Features
 - Fetch messages from a Telegram channel.
 - Extract URLs from message entities.
