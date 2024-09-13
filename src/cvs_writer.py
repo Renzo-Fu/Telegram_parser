@@ -25,35 +25,41 @@ def write_csv(csv_file, messages, channel_name):
     headers = ["CPC Дерево", "Ключевые слова", "Краткое описание идеи/продукта",
                "Длинное описание идеи/продукта", "Компания", "Личности (если есть)",
                "Какой потенциал проекта? Для чего он может быть применим? в чем польза?",
-               "Тип источника", "Название источника", "Источник", "Дата поста", "Текст сообщения", "Ссылки"]
+               "Тип источника", "Название источника", "Источник", "Дата поста", "Текст сообщения", "Ссылки", "Media Links"]
 
-    with open(csv_file, mode='a', newline='', encoding='utf-8') as file:
-        writer = csv.writer(file)
+    try:
+        with open(csv_file, mode='a', newline='', encoding='utf-8') as file:
+            writer = csv.writer(file)
 
-        # Write headers only if the file is newly created
-        if not file_exists:
-            writer.writerow(headers)
+            # Write headers only if the file is newly created
+            if not file_exists:
+                writer.writerow(headers)
 
-        for message in messages:
-            message_content = message.message  # Telethon uses `message` for text/caption
-            serialized_entities = serialize_entities(message.entities)
-            urls = extract_urls_from_serialized_entities(serialized_entities)
-            message_link = f"https://t.me/{message.chat.username}/{message.id}"
+            for message in messages:
+                message_content = message.message
+                serialized_entities = serialize_entities(message.entities)
+                urls = extract_urls_from_serialized_entities(
+                    serialized_entities)
+                message_link = f"https://t.me/{message.chat.username}/{message.id}"
 
-            # Write the message data to the CSV file
-            writer.writerow([
-                "",  # Placeholder for CPC Дерево
-                "",  # Placeholder for Ключевые слова
-                "",  # Placeholder for Краткое описание идеи/продукта
-                "",  # Placeholder for Длинное описание идеи/продукта
-                "",  # Placeholder for Компания
-                "",  # Placeholder for Личности (если есть)
-                "",  # Placeholder for Какой потенциал проекта
-                "TG",  # Тип источника
-                channel_name,  # Название источника
-                message_link,  # Message link
-                # Date without timezone info
-                message.date.replace(tzinfo=None),
-                message_content,  # Message text/caption
-                ', '.join(urls)  # Links found in message entities
-            ])
+                # Write the message data to the CSV file
+                writer.writerow([
+                    "",  # Placeholder for CPC Дерево
+                    "",  # Placeholder for Ключевые слова
+                    "",  # Placeholder for Краткое описание идеи/продукта
+                    "",  # Placeholder for Длинное описание идеи/продукта
+                    "",  # Placeholder for Компания
+                    "",  # Placeholder for Личности (если есть)
+                    "",  # Placeholder for Какой потенциал проекта
+                    "TG",  # Тип источника
+                    channel_name,  # Название источника
+                    message_link,  # Message link
+                    message.date.strftime(
+                        '%Y-%m-%d %H:%M:%S') if message.date else "",  # Date formatted
+                    message_content,  # Message text/caption
+                    ', '.join(urls),  # Links found in message entities
+                    message.file_path if hasattr(
+                        message, 'file_path') else ""  # Media file path
+                ])
+    except IOError as e:
+        print(f"Error writing to CSV file: {e}")
