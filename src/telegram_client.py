@@ -1,5 +1,4 @@
 from telethon.sync import TelegramClient
-from telethon.tl.types import DocumentAttributeFilename
 from dotenv import load_dotenv
 import os
 from pathlib import Path
