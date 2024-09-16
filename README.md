@@ -82,12 +82,12 @@ This is a test parser for extracting Telegram messages and saving them to a CSV 
             You will receive a code sent to Telegram. Enter this code when prompted to continue the execution.
       
       
-7. **Output**:
+6. **Output**:
     - **6.1 Example output**:
         ```bash
         Scraping messages for channel_1...
         Scraping messages for channel_2...
         ```
     After running the script, the extracted messages will be saved in a CSV file located at `data/collected_data.csv`. The file will include details like message text, URLs, message date, and message links.
-    - **6.1 Example output**:
+    - **6.2 Data Organization**:
         All scraped media data will be stored in the data folder. Each type of data (videos, PDFs, photos) will be saved in its respective folder within data.
