@@ -1,73 +1,90 @@
-# Telegram Parser
+# **Telegram Parser**
 
-This is a test parser for extracting Telegram messages and saving them to a CSV file using the library Telethon.
-## Update
-- The `save_media` function now identifies and processes different media types, for now just works with photos and pdfs:
-     - **Photos**: Files are saved with a `.jpg` extension.
-     - **Documents**: Files are saved with the extension specified in the document’s attributes. If the file name is not available, it defaults to `.jpg`.
-## Features
-- Fetch messages from a Telegram channel.
-- Extract URLs from message entities.
-- Save extracted data to a CSV file with organized columns.
+This is a test parser for extracting Telegram messages and saving them to a CSV file using the library **Telethon**.
 
-## Setup
+## **Features**
+- **Multi-Channel Support**:  
+  You can specify multiple Telegram channels in the `.env` file, and the parser will scrape messages from all the channels.
 
-### Requirements
-- Telethon
-- python-dotenv
+- **Periodic Dataset Updates**:  
+  The script stores the ID of the last scraped message for each channel, so subsequent scrapes will only retrieve new messages.
 
-### Installation
+- **Custom CSV Output**:  
+  The data is exported into a CSV file with specific columns, including the name of the channel (`Название источника`) and the message link (`Источник`).
 
-1. Clone the repository:
+## **Setup**
 
-```bash
-git clone https://github.com/yourusername/telegram-parser.git
-cd telegram-parser
-```
-2. Install Poetry:
-```bash
-(Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | python -
-poetry --version
-```
-3. Install Project Dependencies:
-```bash
-poetry install
-```
+### **Requirements**
+- `Telethon`
+- `python-dotenv`
 
-4. Set Up Environment Variables:
-The project uses environment variables to store sensitive information like your Telegram API credentials. You need to create a \`.env\` file at the root of the project directory.
+### **Installation**
 
-4.1. Create a \`.env\` file:
+1. **Clone the repository**:
+    ```bash
+    git clone https://github.com/yourusername/telegram-parser.git
+    cd telegram-parser
+    ```
 
-```bash
-touch .env
-```
+2. **Install Poetry**:
+    ```bash
+    (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | python -
+    poetry --version
+    ```
 
-4.2. Add your Telegram API credentials and channel name to the \`.env\` file:
+3. **Install Project Dependencies**:
+    ```bash
+    poetry install
+    ```
 
-```
-TELEGRAM_API_ID=your_telegram_api_id
-TELEGRAM_API_HASH=your_telegram_api_hash
-TELEGRAM_CHANNEL=your_telegram_channel_name
-```
+4. **Set Up Environment Variables**:
+    The project uses environment variables to store sensitive information like your Telegram API credentials. You need to create a `.env` file at the root of the project directory.
 
-Replace \`your_telegram_api_id\`, \`your_telegram_api_hash\`, and \`your_telegram_channel_name\` with your actual Telegram credentials and channel name.
+    - **4.1. Create a `.env` file**:
+        ```bash
+        touch .env
+        ```
 
-- **To obtain your API ID and Hash**, visit [my.telegram.org](https://my.telegram.org) and create an application.
+    - **4.2. Add your Telegram API credentials and channel names to the `.env` file**:
+        ```plaintext
+        TELEGRAM_API_ID=your_telegram_api_id
+        TELEGRAM_API_HASH=your_telegram_api_hash
+        TELEGRAM_CHANNELS=channel_1,channel_2,channel_3
+        PHOTO=true
+        VIDEO=true
+        PDF=true
+        ```
 
-5. Running the Code:
+    Replace with your actual Telegram credentials and channel names.
 
-5.1. Activate the virtual environment created by Poetry:
+    - **To obtain your API ID and Hash**, visit [my.telegram.org](https://my.telegram.org) and create an application.
 
-```bash
-poetry shell
-```
+5. **Running the Code**:
 
-5.2. Run the script to start fetching messages from Telegram:
+    - **5.1. Activate the virtual environment created by Poetry**:
+        ```bash
+        poetry shell
+        ```
 
-```bash
-poetry run python src/parser.py
-```
-
-6. Output:
-After running the script, the extracted messages will be saved in a CSV file located at \`data/collected_data.csv\`. The file will include details like message text, URLs, message date, and message links.
+    - **5.2. Run the script to start fetching messages from Telegram**:
+        ```bash
+        poetry run python src/parser.py
+        ```
+    - **5.3 During execution, you will be prompted to enter your phone number (or bot token):**:
+        ```bash
+        Scraping messages for Channel_1...
+        Please enter your phone (or bot token):
+        ```
+        Enter your phone number or bot token as instructed.
+      
+    - **5.3 After entering your phone number or bot token**
+            You will receive a code sent to Telegram. Enter this code when prompted to continue the execution.
+      
+      
+7. **Output**:
+    - **6.1 Example output**:
+        ```bash
+        Scraping messages for channel_1...
+        Scraping messages for channel_2...
+        ```
+    After running the script, the extracted messages will be saved in a CSV file located at `data/collected_data.csv`. The file will include details like message text, URLs, message date, and message links.
