@@ -56,10 +56,11 @@ This is a test parser for extracting Telegram messages and saving them to a CSV 
         ```
 
     Replace with your actual Telegram credentials and channel names.
+    Adjust PHOTO, VIDEO, and PDF as needed.
 
     - **To obtain your API ID and Hash**, visit [my.telegram.org](https://my.telegram.org) and create an application.
 
-5. **Running the Code**:
+6. **Running the Code**:
 
     - **5.1. Activate the virtual environment created by Poetry**:
         ```bash
@@ -88,3 +89,5 @@ This is a test parser for extracting Telegram messages and saving them to a CSV 
         Scraping messages for channel_2...
         ```
     After running the script, the extracted messages will be saved in a CSV file located at `data/collected_data.csv`. The file will include details like message text, URLs, message date, and message links.
+    - **6.1 Example output**:
+        All scraped media data will be stored in the data folder. Each type of data (videos, PDFs, photos) will be saved in its respective folder within data.
