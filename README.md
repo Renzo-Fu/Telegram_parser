@@ -61,7 +61,15 @@ This is a test parser for extracting Telegram messages and saving them to a CSV 
     - **To obtain your API ID and Hash**, visit [my.telegram.org](https://my.telegram.org) and create an application.
 
 6. **Running the Code**:
+        ```
+        TELEGRAM_CHANNELS=channel_1,channel_2,channel_3  # Comma-separated list of channel names without spaces (as many as needed)
+        ```
 
+    Replace with your actual Telegram credentials and channel names.
+
+    - **To obtain your API ID and Hash**, visit [my.telegram.org](https://my.telegram.org) and create an application.
+
+5. **Running the Code**:
     - **5.1. Activate the virtual environment created by Poetry**:
         ```bash
         poetry shell
@@ -78,9 +86,8 @@ This is a test parser for extracting Telegram messages and saving them to a CSV 
         ```
         Enter your phone number or bot token as instructed.
       
-    - **5.3 After entering your phone number or bot token**
+    - **5.4 After entering your phone number or bot token**
             You will receive a code sent to Telegram. Enter this code when prompted to continue the execution.
-      
       
 6. **Output**:
     - **6.1 Example output**:
