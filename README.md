@@ -49,6 +49,19 @@ This is a test parser for extracting Telegram messages and saving them to a CSV 
         ```plaintext
         TELEGRAM_API_ID=your_telegram_api_id
         TELEGRAM_API_HASH=your_telegram_api_hash
+        TELEGRAM_CHANNELS=channel_1,channel_2,channel_3
+        PHOTO=true
+        VIDEO=true
+        PDF=true
+        ```
+
+    Replace with your actual Telegram credentials and channel names.
+    Adjust PHOTO, VIDEO, and PDF as needed.
+
+    - **To obtain your API ID and Hash**, visit [my.telegram.org](https://my.telegram.org) and create an application.
+
+6. **Running the Code**:
+        ```
         TELEGRAM_CHANNELS=channel_1,channel_2,channel_3  # Comma-separated list of channel names without spaces (as many as needed)
         ```
 
@@ -57,7 +70,6 @@ This is a test parser for extracting Telegram messages and saving them to a CSV 
     - **To obtain your API ID and Hash**, visit [my.telegram.org](https://my.telegram.org) and create an application.
 
 5. **Running the Code**:
-
     - **5.1. Activate the virtual environment created by Poetry**:
         ```bash
         poetry shell
@@ -67,7 +79,16 @@ This is a test parser for extracting Telegram messages and saving them to a CSV 
         ```bash
         poetry run python src/parser.py
         ```
-
+    - **5.3 During execution, you will be prompted to enter your phone number (or bot token):**:
+        ```bash
+        Scraping messages for Channel_1...
+        Please enter your phone (or bot token):
+        ```
+        Enter your phone number or bot token as instructed.
+      
+    - **5.4 After entering your phone number or bot token**
+            You will receive a code sent to Telegram. Enter this code when prompted to continue the execution.
+      
 6. **Output**:
     - **6.1 Example output**:
         ```bash
@@ -75,3 +96,5 @@ This is a test parser for extracting Telegram messages and saving them to a CSV 
         Scraping messages for channel_2...
         ```
     After running the script, the extracted messages will be saved in a CSV file located at `data/collected_data.csv`. The file will include details like message text, URLs, message date, and message links.
+    - **6.2 Data Organization**:
+        All scraped media data will be stored in the data folder. Each type of data (videos, PDFs, photos) will be saved in its respective folder within data.

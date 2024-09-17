@@ -8,7 +8,10 @@ import os
 load_dotenv()
 
 # Directly set environment variables (for testing purposes) if updating .env file doesn't work
-# os.environ["TELEGRAM_CHANNELS"] = "channel_1,cahnnel_2,cahnnel_3"
+# os.environ["TELEGRAM_CHANNELS"] = "channel_1,cahnnel_2, etc"
+# os.environ["PHOTO"] = 'true'
+# os.environ["VIDEO"] = 'false'
+# os.environ["PDF"] = 'true'
 
 
 @measure_time
@@ -18,8 +21,12 @@ def main():
     Scrapes only new messages since the last scrape for each channel.
     """
     channels = os.getenv("TELEGRAM_CHANNELS").split(',')
-    limit = 50  # can be set as dyanmic if needed, for now is set here for testing purposes
+    limit = 10  # can be set as dyanmic if needed, for now is set here for testing purposes
     csv_file = "data/collected_data.csv"
+
+    photo_scrape = os.getenv("PHOTO", "false").lower() == "true"
+    video_scrape = os.getenv("VIDEO", "false").lower() == "true"
+    pdf_scrape = os.getenv("PDF", "false").lower() == "true"
 
     # Load last scraped message IDs for all channels
     last_scraped_ids = load_last_scraped_ids()
@@ -29,7 +36,9 @@ def main():
 
         # Fetch new messages from the channel
         messages = get_telegram_messages(
-            channel.strip(), limit, last_scraped_ids.get(channel.strip()))
+            channel.strip(), limit, last_scraped_ids.get(channel.strip()),
+            photo_scrape, video_scrape, pdf_scrape
+        )
 
         if messages:
             # Update the last scraped message ID for this channel
